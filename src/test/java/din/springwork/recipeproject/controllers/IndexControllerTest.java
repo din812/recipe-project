@@ -25,6 +25,7 @@ class IndexControllerTest {
 
     @Mock
     RecipeService recipeService;
+
     @Mock
     Model model;
 
