@@ -1,5 +1,7 @@
 package din.springwork.recipeproject.services;
 
+import din.springwork.recipeproject.converters.RecipeCommandToRecipe;
+import din.springwork.recipeproject.converters.RecipeToRecipeCommand;
 import din.springwork.recipeproject.model.Recipe;
 import din.springwork.recipeproject.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +22,12 @@ class RecipeServiceImplTest {
 
     @Mock
     RecipeRepository recipeRepository;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
 
     @BeforeEach
     void setUp() {

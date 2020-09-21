@@ -24,7 +24,7 @@
             <div class="panel panel-primary">
 
                 <div class="panel-heading">
-                    <h1 class="panel-title" align="center">My Recipes!</h1>
+                    <h1 class="panel-title" align="center">"My" Recipes!</h1>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive" th:if="${not #lists.isEmpty(recipes)}">
@@ -34,22 +34,24 @@
                                 <th>ID</th>
                                 <th>Description</th>
                                 <th>View</th>
+                                <th>Update</th>
                             </tr>
                             </thead>
                             <tr th:remove="all">
                                 <td>334</td>
-                                <td>Tasty Goodnees 1</td>
+                                <td>Tasty 1</td>
                                 <td><a href="#">View</a></td>
                             </tr>
                             <tr th:remove="all">
                                 <td>334</td>
-                                <td>Tasty Goodnees 2</td>
+                                <td>Tasty 2</td>
                                 <td><a href="#">View</a></td>
                             </tr>
                             <tr th:each="recipe : ${recipes}">
                                 <td th:text="${recipe.id}">334</td>
-                                <td th:text="${recipe.description}">Tasty Goodnees 3</td>
-                                <td><a href="#" th:href="@{'/recipe/show/' + ${recipe.id}}">View</a></td>
+                                <td th:text="${recipe.description}">Tasty 3</td>
+                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/show/'}">View</a></td>
+                                <td><a href="#" th:href="@{'/recipe/' + ${recipe.id} + '/update/'}">Update</a></td>
                             </tr>
                         </table>
                     </div>
