@@ -1,11 +1,14 @@
 package din.springwork.recipeproject.model;
 
-import lombok.Data;
+import lombok.Setter;
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Recipe {
 
