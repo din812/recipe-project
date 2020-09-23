@@ -1,6 +1,7 @@
 package din.springwork.recipeproject.services;
 
 import din.springwork.recipeproject.commands.IngredientCommand;
+import din.springwork.recipeproject.commands.UnitOfMeasureCommand;
 import din.springwork.recipeproject.converters.IngredientCommandToIngredient;
 import din.springwork.recipeproject.converters.IngredientToIngredientCommand;
 import din.springwork.recipeproject.converters.UnitOfMeasureToUnitOfMeasureCommand;
@@ -110,5 +111,28 @@ class IngredientServiceImplTest {
         assertEquals(Long.valueOf(3L), savedCommand.getId());
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, times(1)).save(any(Recipe.class));
+
+    }
+
+    @Test
+    void deleteIngredientCommand() {
+        //given
+        Recipe recipe = new Recipe();
+        Ingredient ingredient1 = new Ingredient();
+        ingredient1.setId(3L);
+        recipe.addIngredient(ingredient1);
+        ingredient1.setRecipe(recipe);
+
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        //when
+        ingredientService.deleteById(1L, 3L);
+
+        //then
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).save(any(Recipe.class));
+
     }
 }
