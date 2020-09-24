@@ -3,6 +3,7 @@ package din.springwork.recipeproject.services;
 import din.springwork.recipeproject.commands.RecipeCommand;
 import din.springwork.recipeproject.converters.RecipeCommandToRecipe;
 import din.springwork.recipeproject.converters.RecipeToRecipeCommand;
+import din.springwork.recipeproject.exceptions.NotFoundException;
 import din.springwork.recipeproject.model.Recipe;
 import din.springwork.recipeproject.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe Not Found! For id value: " + l.toString());
         }
 
         return recipeOptional.get();

@@ -1,6 +1,7 @@
 package din.springwork.recipeproject.controllers;
 
 import din.springwork.recipeproject.commands.RecipeCommand;
+import din.springwork.recipeproject.exceptions.NotFoundException;
 import din.springwork.recipeproject.model.Recipe;
 import din.springwork.recipeproject.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,6 +46,22 @@ public class RecipeControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/show"))
         .andExpect(model().attributeExists("recipe"));
+    }
+
+    @Test
+    public void testGetRecipeNotFound() throws Exception {
+        when(recipeService.findById(anyLong())).thenThrow(NotFoundException.class);
+
+        mockMvc.perform(get("/recipe/1/show"))
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
+    }
+
+    @Test
+    public void testGetRecipeFormatException() throws Exception {
+        mockMvc.perform(get("/recipe/asd/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
     }
 
     @Test
@@ -95,4 +112,6 @@ public class RecipeControllerTest {
 
         verify(recipeService, times(1)).deleteById(anyLong());
     }
+
+
 }

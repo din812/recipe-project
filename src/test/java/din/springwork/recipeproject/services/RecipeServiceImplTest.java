@@ -1,5 +1,7 @@
 package din.springwork.recipeproject.services;
 
+import din.springwork.recipeproject.exceptions.NotFoundException;
+import din.springwork.recipeproject.commands.RecipeCommand;
 import din.springwork.recipeproject.converters.RecipeCommandToRecipe;
 import din.springwork.recipeproject.converters.RecipeToRecipeCommand;
 import din.springwork.recipeproject.model.Recipe;
@@ -47,6 +49,38 @@ class RecipeServiceImplTest {
         Recipe recipeReturned = recipeService.findById(1L);
 
         assertNotNull("Null recipe returned", String.valueOf(recipeReturned));
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
+    public void getRecipeByIdTestNotFound() {
+        Optional<Recipe> recipeOptional = Optional.empty();
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        assertThrows(NotFoundException.class, () -> {
+            recipeService.findById(1L);
+        });
+
+        //hello error
+    }
+
+    @Test
+    public void getRecipeCommandByIdTest() {
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeService.findCommandById(1L);
+
+        assertNotNull("Null recipe returned", String.valueOf(commandById));
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
     }
