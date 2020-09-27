@@ -7,6 +7,5 @@ workflows:
   maven_test:
     jobs:
       - maven/test # checkout, build, test, and upload test results
-      - run:
-          name: send to codecov
-          command: bash <(curl -s https://codecov.io/bash)
+      name: send to codecov
+      command: bash <(curl -s https://codecov.io/bash)
